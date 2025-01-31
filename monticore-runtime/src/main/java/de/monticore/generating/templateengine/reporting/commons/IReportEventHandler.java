@@ -4,6 +4,8 @@ package de.monticore.generating.templateengine.reporting.commons;
 
 import de.monticore.ast.ASTNode;
 import de.monticore.generating.templateengine.HookPoint;
+import de.monticore.generating.templateengine.sourcemap.IncludeSpan;
+import de.monticore.sourcemap.DecodedMapping;
 import de.monticore.io.paths.MCPath;
 import de.monticore.symboltable.IScope;
 
@@ -24,7 +26,11 @@ public interface IReportEventHandler {
   void reportFileCreation(String templatename, String qualifiedfilename, String fileextension,
       ASTNode ast);
 
+  void reportBeforeFileCreation(String templatename,
+                                 String path, String fileextension, ASTNode ast);
+
   void reportFileCreation(Path parentPath, Path file);
+
 
   void reportFileFinalization(String templatename, String qualifiedfilename, String fileextension,
       ASTNode ast);
@@ -107,7 +113,7 @@ public interface IReportEventHandler {
    * @param hps
    * @param ast
    */
-  
+
   void reportCallSpecificReplacementHookPoint(String oldTemplate, List<HookPoint> hps, ASTNode ast);
 
   /**
@@ -115,7 +121,7 @@ public interface IReportEventHandler {
    * @param hps
    * @param ast
    */
-  
+
   void reportCallReplacementHookPoint(String oldTemplate, List<HookPoint> hps, ASTNode ast);
 
   /**
@@ -123,7 +129,7 @@ public interface IReportEventHandler {
    * @param beforeHPs
    * @param ast
    */
-  
+
   void reportCallBeforeHookPoint(String oldTemplate, Collection<HookPoint> beforeHPs, ASTNode ast);
 
   /**
@@ -267,4 +273,10 @@ public interface IReportEventHandler {
   void reportOpenInputFile(String fileName);
 
   void reportFileExistenceChecking(List<Path> parentPath, Path file);
+
+  void reportTemplateSourceMapping(List<DecodedMapping> mapping);
+
+  void reportASTSourceMapping(List<DecodedMapping> mapping);
+
+  void reportTemplateIncludeSpan(List<IncludeSpan> spans);
 }
