@@ -462,7 +462,7 @@ public class ReportManager implements IReportEventHandler {
   @Override
   public void reportASTSourceMapping(List<DecodedMapping> mapping) {
     for (IReportEventHandler handler : reportEventHandlers) {
-      handler.reportTemplateSourceMapping(mapping);
+      handler.reportASTSourceMapping(mapping);
     }
   }
 
