@@ -409,6 +409,16 @@ public class TemplateController {
                         final List<Object> templateArguments) {
     final String qualifiedTemplateName = completeQualifiedName(templateName);
 
+    Path completeFilePath;
+    if (filePath.isAbsolute()) {
+      completeFilePath = filePath;
+    } else {
+      completeFilePath = Paths.get(config.getOutputDirectory().getAbsolutePath(),
+          filePath.toString());
+    }
+
+    Reporting.reportBeforeFileCreation(qualifiedTemplateName, completeFilePath, ast);
+
     StringBuilder content = new StringBuilder();
     // add trace to source-model:
     if (config.isTracing() && config.getModelName().isPresent()) {
@@ -436,13 +446,6 @@ public class TemplateController {
     if (!Reporting.isTemplateSourceMappingEnabled() && config.isTracing() && config.getModelName().isPresent()) {
       content.insert(0, config.getCommentStart() + " generated from model " + config.getModelName().get() + " "
           + config.getCommentEnd() + "\n");
-    }
-
-    Path completeFilePath;
-    if (filePath.isAbsolute()) {
-      completeFilePath = filePath;
-    } else {
-      completeFilePath = Paths.get(config.getOutputDirectory().getAbsolutePath(), filePath.toString());
     }
 
     Reporting.reportFileCreation(qualifiedTemplateName, filePath, ast);
