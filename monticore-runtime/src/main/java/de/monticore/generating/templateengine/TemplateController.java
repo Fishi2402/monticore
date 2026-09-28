@@ -10,6 +10,7 @@ import de.monticore.generating.GeneratorSetup;
 import de.monticore.generating.templateengine.freemarker.SimpleHashFactory;
 import de.monticore.generating.templateengine.freemarker.alias.*;
 import de.monticore.generating.templateengine.reporting.Reporting;
+import de.monticore.generating.templateengine.sourcemap.SourceMapCalculator;
 import de.monticore.io.FileReaderWriter;
 import de.se_rwth.commons.Names;
 import de.se_rwth.commons.logging.Log;
@@ -445,13 +446,6 @@ public class TemplateController {
 
     if (content.length() == beforeTemplatesLength) {
       Log.warn("0xA4057 Template " + qualifiedTemplateName + " produced no content for.");
-    }
-
-    Path completeFilePath;
-    if (filePath.isAbsolute()) {
-      completeFilePath = filePath;
-    } else {
-      completeFilePath = Paths.get(config.getOutputDirectory().getAbsolutePath(), filePath.toString());
     }
 
     // add trace to source-model:
